@@ -1,1 +1,76 @@
-// TODO
+
+.logo {
+  position: absolute;
+  width: 238.62px;
+  height: 25.63px;
+  left: 380px;
+  top: 66px;
+}
+
+.container {
+  position: absolute;
+  width: 700px;
+  height: 108px;
+  left: 370px;
+}
+
+.posts {
+  max-width: 720px;
+  margin-top: 170px;
+
+  a{
+    display: block;
+
+    & + a {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--gray-700);
+    }
+
+    .calendar {
+      margin-top: 1rem;
+      display: inline;
+    }
+
+    .user {
+      margin-left: 1rem;
+    }
+
+    time, .author {
+      font-size: 0.8rem;
+      align-items: center;
+      margin-left: 1rem;
+      color: var(--gray-300);
+      display: inline;
+
+    }
+
+    strong {
+      display: block;
+      font-size: 1.5rem;
+      margin-top: 1rem;
+      line-height: 2rem;
+    }
+
+    p {
+      color: var(--gray-300);
+      left: 0%;
+      right: 28.57%;
+      top: 38.89%;
+      bottom: 40.74%;
+
+      font-family: Inter;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 22px;
+
+      text-align: justify;
+
+    }
+
+    &:hover strong {
+      color: var(--yellow-500);
+    }
+  }
+}
