@@ -1,5 +1,4 @@
 import { GetStaticProps } from 'next';
-import  Head  from 'next/head';
 import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-dom';
 
@@ -31,11 +30,6 @@ interface HomeProps {
 export default function Home({ posts }) {
   return (
     <>
-      <Head>
-        <title>Posts | CRA</title>
-        <img  className={styles.logo} src="/images/Logo.svg" alt="logo" />
-      </Head>
-
       <main className={styles.container}>
         <div className={styles.posts}>
           {posts.map(post => (
