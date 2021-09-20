@@ -1,5 +1,7 @@
 import { GetStaticProps } from 'next';
 import  Head  from 'next/head';
+import Prismic from '@prismicio/client';
+import { RichText } from 'prismic-dom';
 
 import { getPrismicClient } from '../services/prismic';
 
@@ -13,6 +15,7 @@ interface Post {
     title: string;
     subtitle: string;
     author: string;
+    updatedAt: string;
   };
 }
 
@@ -25,46 +28,28 @@ interface HomeProps {
   postsPagination: PostPagination;
 }
 
-export default function Home() {
+export default function Home({ posts }) {
   return (
     <>
       <Head>
-        <title>Posts | Ignews</title>
+        <title>Posts | CRA</title>
         <img  className={styles.logo} src="/images/Logo.svg" alt="logo" />
       </Head>
 
       <main className={styles.container}>
         <div className={styles.posts}>
-          <a href="#">
-            <strong>Exibindo informações do imóvel com ModalRoute</strong>
-            <p>Esse post é a decima primeira parte da série de posts “Clone AirBnB com AdonisJS.</p>
+          {posts.map(post => (
+            <a key={post.slug} href="#">
+              <strong>{post.title}</strong>
+              <p>{post.excerpt}</p>
 
-            <img  className={styles.calendar} src="/images/calendar.png" alt="calendar" />
-            <time>12 de março de 2021</time>
+              <img  className={styles.calendar} src="/images/calendar.png" alt="calendar" />
+              <time>{post.updatedAt}</time>
 
-            <img  className={styles.user} src="/images/user.png" alt="user" />
-            <span className={styles.author}>Josepha Stefany</span>
-          </a>
-          <a href="#">
-            <strong>Exibindo informações do imóvel com ModalRoute</strong>
-            <p>Esse post é a decima primeira parte da série de posts “Clone AirBnB com AdonisJS.</p>
-
-            <img  className={styles.calendar} src="/images/calendar.png" alt="calendar"/>
-            <time>12 de março de 2021</time>
-
-            <img  className={styles.user} src="/images/user.png" alt="user" />
-            <span className={styles.author}>Josepha Stefany</span>
-          </a>
-          <a href="#">
-            <strong>Exibindo informações do imóvel com ModalRoute</strong>
-            <p>Esse post é a decima primeira parte da série de posts “Clone AirBnB com AdonisJS.</p>
-
-            <img  className={styles.calendar} src="/images/calendar.png" alt="calendar" />
-            <time>12 de março de 2021</time>
-
-            <img  className={styles.user} src="/images/user.png" alt="user" />
-            <span className={styles.author}>Josepha Stefany</span>
-          </a>
+              <img  className={styles.user} src="/images/user.png" alt="user" />
+              <span className={styles.author}>{post.author}</span>
+            </a>
+          ))}
         </div>
       </main>
     </>
@@ -72,9 +57,38 @@ export default function Home() {
   // TODO
 }
 
-// export const getStaticProps = async () => {
-//   // const prismic = getPrismicClient();
-//   // const postsResponse = await prismic.query(TODO);
+export const getStaticProps: GetStaticProps = async () => {
+  const prismic = getPrismicClient();
 
-//   // TODO
-// };
+  const postsResponse = await prismic.query([
+    Prismic.predicates.at('document.type', 'publi'),
+  ], {
+    fetch: ['title', 'content','author.name'],
+    pageSize: 2,
+  })
+
+  console.log('response: ', JSON.stringify(postsResponse, null, 2))
+
+  const posts = postsResponse.results.map(post => {
+    return {
+      slug: post.uid,
+      title: RichText.asText(post.data.title),
+      author: post.data.author,
+      subtitle: post.data.content.find(content => content.type === 'paragraph')?.text ?? '',
+      updatedAt: new Date(post.last_publication_date).toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+      })
+    }
+  })
+
+
+  return {
+    props: {
+      posts
+    }
+  }
+
+  // TODO
+};
