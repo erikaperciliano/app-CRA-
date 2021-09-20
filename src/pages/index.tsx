@@ -1,4 +1,6 @@
 import { GetStaticProps } from 'next';
+import Link from 'next/link';
+
 import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-dom';
 
@@ -33,22 +35,23 @@ export default function Home({ posts }) {
       <main className={styles.container}>
         <div className={styles.posts}>
           {posts.map(post => (
-            <a key={post.slug} href="#">
-              <strong>{post.title}</strong>
-              <p>{post.excerpt}</p>
+            <Link  href={`/post/${post.slug}`}>
+              <a key={post.slug}>
+                <strong>{post.title}</strong>
+                <p>{post.excerpt}</p>
 
-              <img  className={styles.calendar} src="/images/calendar.png" alt="calendar" />
-              <time>{post.updatedAt}</time>
+                <img  className={styles.calendar} src="/images/calendar.png" alt="calendar" />
+                <time>{post.updatedAt}</time>
 
-              <img  className={styles.user} src="/images/user.png" alt="user" />
-              <span className={styles.author}>{post.author}</span>
-            </a>
+                <img  className={styles.user} src="/images/user.png" alt="user" />
+                <span className={styles.author}>{post.author}</span>
+              </a>
+            </Link>
           ))}
         </div>
       </main>
     </>
   );
-  // TODO
 }
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -60,8 +63,6 @@ export const getStaticProps: GetStaticProps = async () => {
     fetch: ['title', 'content','author.name'],
     pageSize: 2,
   })
-
-  console.log('response: ', JSON.stringify(postsResponse, null, 2))
 
   const posts = postsResponse.results.map(post => {
     return {
@@ -77,12 +78,9 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   })
 
-
   return {
     props: {
       posts
     }
   }
-
-  // TODO
 };

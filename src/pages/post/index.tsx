@@ -29,45 +29,7 @@ interface HomeProps {
 export default function Home() {
   return (
     <>
-      <Head>
-        <title>Posts | Ignews</title>
-        <img  className={styles.logo} src="/images/Logo.svg" alt="logo" />
-      </Head>
-
-      <main className={styles.container}>
-        <div className={styles.posts}>
-          <a href="#">
-            <strong>Exibindo informações do imóvel com ModalRoute</strong>
-            <p>Esse post é a decima primeira parte da série de posts “Clone AirBnB com AdonisJS.</p>
-
-            <img  className={styles.calendar} src="/images/calendar.png" alt="calendar" />
-            <time>12 de março de 2021</time>
-
-            <img  className={styles.user} src="/images/user.png" alt="user" />
-            <span className={styles.author}>Josepha Stefany</span>
-          </a>
-          <a href="#">
-            <strong>Exibindo informações do imóvel com ModalRoute</strong>
-            <p>Esse post é a decima primeira parte da série de posts “Clone AirBnB com AdonisJS.</p>
-
-            <img  className={styles.calendar} src="/images/calendar.png" alt="calendar"/>
-            <time>12 de março de 2021</time>
-
-            <img  className={styles.user} src="/images/user.png" alt="user" />
-            <span className={styles.author}>Josepha Stefany</span>
-          </a>
-          <a href="#">
-            <strong>Exibindo informações do imóvel com ModalRoute</strong>
-            <p>Esse post é a decima primeira parte da série de posts “Clone AirBnB com AdonisJS.</p>
-
-            <img  className={styles.calendar} src="/images/calendar.png" alt="calendar" />
-            <time>12 de março de 2021</time>
-
-            <img  className={styles.user} src="/images/user.png" alt="user" />
-            <span className={styles.author}>Josepha Stefany</span>
-          </a>
-        </div>
-      </main>
+      <h1>POST</h1>
     </>
   );
   // TODO
