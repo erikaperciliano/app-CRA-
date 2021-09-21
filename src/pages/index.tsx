@@ -29,7 +29,7 @@ interface HomeProps {
   postsPagination: PostPagination;
 }
 
-export default function Home({ posts }) {
+export default function Home({ posts, next_page }) {
   return (
     <>
       <main className={styles.container}>
@@ -48,6 +48,13 @@ export default function Home({ posts }) {
               </a>
             </Link>
           ))}
+          {next_page !== null &&
+            <button
+              className={styles.readMore}
+            >
+              Carregar mais posts
+            </button>
+          }
         </div>
       </main>
     </>
@@ -61,8 +68,13 @@ export const getStaticProps: GetStaticProps = async () => {
     Prismic.predicates.at('document.type', 'publi'),
   ], {
     fetch: ['title', 'content','author.name'],
-    pageSize: 2,
+    pageSize: 100,
   })
+
+  const next_page = postsResponse.next_page;
+
+  console.log('next_page: ', postsResponse.next_page)
+
 
   const posts = postsResponse.results.map(post => {
     return {
@@ -78,9 +90,12 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   })
 
+
+
   return {
     props: {
-      posts
+      posts,
+      next_page
     }
   }
 };
