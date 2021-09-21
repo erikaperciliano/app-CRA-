@@ -6,6 +6,7 @@ import { getPrismicClient } from '../../services/prismic';
 
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
+import { useRouter } from 'next/router';
 
 interface Post {
   first_publication_date: string | null;
@@ -30,13 +31,29 @@ interface PostProps {
 }
 
 export default function Post({ post }) {
+  const router = useRouter()
+
+
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+
   return (
     <>
       <main className={styles.container}>
         <article className={styles.post}>
           <img className={styles.banner} src={post.banner.url} alt="banner" />
           <h1>{post.title}</h1>
-          <time>{post.updatedAt}</time>
+          <div className={styles.header}>
+            <img  className={styles.calendar} src="/images/calendar.png" alt="calendar" />
+            <time>{post.updatedAt}</time>
+
+            <img  className={styles.user} src="/images/user.png" alt="user" />
+            <span className={styles.author}>{post.author}</span>
+            <img  className={styles.clock} src="/images/clock.svg" alt="clock" />
+            <span className={styles.author}>{Math.round(post.content.length / 200)} min</span>
+          </div>
+
           <div
             className={styles.postContent}
             dangerouslySetInnerHTML={{ __html: post.content}}
