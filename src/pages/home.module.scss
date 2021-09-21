@@ -68,3 +68,21 @@
     }
   }
 }
+
+.readMore {
+  position: absolute;
+  width: 176px;
+  height: 22px;
+  margin-top: 2rem;
+
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+
+  text-align: justify;
+  color: #FF57B2;
+  border: none;
+  background: var(--gray-900);
+}
